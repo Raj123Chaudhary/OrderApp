@@ -159,7 +159,7 @@ function App() {
       {/* section 2 your orders  */}
 
       <div>
-        <div className="w-[60%] mx-auto mt-5">
+        <div className="md:w-[80%] w-full p-2 mx-auto mt-5">
           {orders.length === 0 ? (
             <h1 className="text-center text-2xl font-semibold text-red-400">
               No orders yet
