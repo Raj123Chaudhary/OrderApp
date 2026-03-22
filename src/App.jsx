@@ -7,7 +7,7 @@ function App() {
     const errors = {};
     if (!formData.customerName.trim()) {
       errors.customerName = "Customer Name is Required";
-    } else if (!formData.customerName.length > 3)
+    } else if (formData.customerName.length < 3)
       errors.customerName = "Name should be al least 3 character";
     if (!formData.phoneNumber) {
       errors.phoneNumber = "phone number required";
@@ -45,6 +45,7 @@ function App() {
       setErrors(validationErrors);
       return;
     }
+    setErrors({});
 
     setOrders([formData, ...orders]);
     console.log(orders);
@@ -118,33 +119,28 @@ function App() {
             <p className="text-red-500 text-sm mt-1">{errors.address}</p>
           )}
           <div className="flex mt-2 justify-between">
-            <label className="w-full" htmlFor="">
-              Service Type
-            </label>
+            <label className="w-full">Service Type</label>
             <select
               onChange={handleChange}
               className="w-full px-2 py-1 border focus:outline-none"
               name="serviceType"
-              id=""
               value={formData.serviceType}
-            >
-              <option value="Today Morning">Today Morning</option>
-              <option value="Today Evening">Today Evening</option>
-            </select>
-          </div>
-          <div className="flex mt-2 justify-between">
-            <label className="w-full" htmlFor="">
-              Pickup Slot
-            </label>
-            <select
-              onChange={handleChange}
-              className="w-full focus:outline-none border py-1 px-2"
-              name="pickupSlot"
-              id=""
-              value={formData.pickupSlot}
             >
               <option value="A">A</option>
               <option value="B">B</option>
+            </select>
+          </div>
+
+          <div className="flex mt-2 justify-between">
+            <label className="w-full">Pickup Slot</label>
+            <select
+              onChange={handleChange}
+              className="w-full border py-1 px-2 focus:outline-none"
+              name="pickupSlot"
+              value={formData.pickupSlot}
+            >
+              <option value="Today Morning">Today Morning</option>
+              <option value="Today Evening">Today Evening</option>
             </select>
           </div>
 
@@ -165,28 +161,33 @@ function App() {
               No orders yet
             </h1>
           ) : (
-            <table className="w-full border border-gray-300">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="border p-2">Name</th>
-                  <th className="border p-2">Phone</th>
-                  <th className="border p-2">Address</th>
-                  <th className="border p-2">Service</th>
-                  <th className="border p-2">Slot</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order, index) => (
-                  <tr key={index} className="text-center">
-                    <td className="border p-2">{order.customerName}</td>
-                    <td className="border p-2">{order.phoneNumber}</td>
-                    <td className="border p-2">{order.address}</td>
-                    <td className="border p-2">{order.serviceType}</td>
-                    <td className="border p-2">{order.pickupSlot}</td>
+            <div>
+              <h1 className="text-center text-2xl font-semibold text-red-400">
+                Your Orders
+              </h1>
+              <table className="w-full mt-5 border border-gray-300">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="border p-2">Name</th>
+                    <th className="border p-2">Phone</th>
+                    <th className="border p-2">Address</th>
+                    <th className="border p-2">Service</th>
+                    <th className="border p-2">Slot</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {orders.map((order, index) => (
+                    <tr key={index} className="text-center">
+                      <td className="border p-2">{order.customerName}</td>
+                      <td className="border p-2">{order.phoneNumber}</td>
+                      <td className="border p-2">{order.address}</td>
+                      <td className="border p-2">{order.serviceType}</td>
+                      <td className="border p-2">{order.pickupSlot}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </div>
